@@ -5,6 +5,8 @@
  */
 package analisisautomoviles;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Angel
@@ -22,7 +24,9 @@ public class AnalisisAutomoviles extends Thread{
     public void run() {
 //        try {
             Coche c1 = new Coche();
-            c1.setDireccionales(3);
+//            c1.setDireccionales(4);
+            c1.setDireccionales(1);
+            c1.setDireccionales(Direccionales.DERECHA);
             c1.acelerar();
 //            sleep(5000);
             c1.acelerar();
@@ -32,7 +36,7 @@ public class AnalisisAutomoviles extends Thread{
             System.out.println("El coche está " + (c1.movimiento ? "en movimiento" : "detenido"));
             System.out.println("La luz delantera está " + (c1.luz_delantera ? "encendida" : "apagada"));
             System.out.println("La luz trasera está " + (c1.luz_trasera ? "encendida" : "apagada"));
-            System.out.println("Las direccionales están " + c1.direccionales.getEstado());
+            System.out.println("Las direccionales están " + c1.getDireccionales());
   /*      } catch (InterruptedException ex) {
             System.out.println("Interrumpido");
         }*/
