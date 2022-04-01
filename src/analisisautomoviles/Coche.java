@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 public class Coche {
     public boolean prende, luz_delantera, luz_trasera, movimiento;
     public double kilometraje;
-    public Direccionales direccionales;
+    private Direccionales direccionales;
     public double velocidad;
     public long time_milis;
     
@@ -49,19 +49,15 @@ public class Coche {
     }
     
     public void setDireccionales(int direccionales){
-        switch(direccionales){
-            case 1:
-                this.direccionales = Direccionales.IZQUIERDA;
-                break;
-            case 2:
-                this.direccionales = Direccionales.DERECHA;
-                break;
-            case 3:
-                this.direccionales = Direccionales.INTERMITENTES;
-                break;
-            default:
-                this.direccionales = Direccionales.APAGADAS;
-                break;
-        }
+        if(direccionales < Direccionales.values().length){
+            for(Direccionales d : Direccionales.values())
+                if(direccionales == d.ordinal())
+                    this.direccionales = d;
+        } else
+            this.direccionales = Direccionales.APAGADAS;
+    }
+
+    public void setDireccionales(Direccionales direccionales){
+        this.direccionales = direccionales;
     }
 }
