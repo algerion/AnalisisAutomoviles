@@ -10,7 +10,8 @@ package analisisautomoviles;
  * @author Angel
  */
 public enum Direccionales {
-    APAGADAS("apagadas"), IZQUIERDA("a la izquierda"), DERECHA("a la derecha"), INTERMITENTES("en intermitencia");
+    APAGADAS("apagadas"), IZQUIERDA("a la izquierda"), DERECHA("a la derecha"), 
+            INTERMITENTES("en intermitencia");
     private String estado;
     
     private Direccionales(String estado){
