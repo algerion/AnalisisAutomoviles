@@ -5,19 +5,22 @@
  */
 package analisisautomoviles;
 
-import java.sql.Timestamp;
-
 /**
  *
  * @author Angel
  */
 public class Coche {
-    public boolean prende, luz_delantera, luz_trasera, movimiento;
+    //Atributos
+    public boolean prende, luz_delantera, luz_trasera;
+    private boolean movimiento;
     public double kilometraje;
     private Direccionales direccionales;
     public double velocidad;
     public long time_milis;
     
+    //Constructor
+    /**
+     */
     public Coche(){
         this.velocidad = 0.0;
         this.direccionales = Direccionales.APAGADAS;
@@ -26,22 +29,17 @@ public class Coche {
         this.luz_trasera = false;
         this.prende = false;
         this.movimiento = false;
-        /*
-        if(!this.prende) //this.prende != true
-            this.movimiento = false;
-*/
     }
     
-    public void acelerar(){
-        long segundos, nuevo_time_milis = System.currentTimeMillis();
-        
-        velocidad += 5; //contador-acumulador
-        if(nuevo_time_milis - time_milis != 0)
-            segundos = (nuevo_time_milis - time_milis) / 1000;
-        else
-            segundos = 1;
-        kilometraje += velocidad / segundos;// v=d/t d = vt acumulador  
-        time_milis = System.currentTimeMillis();
+    //Getters y Setters
+    public void setMovimiento(boolean movimiento) {
+        this.movimiento = movimiento;
+        if(!this.prende) //this.prende != true
+            this.movimiento = false;
+    }
+
+    public boolean isMovimiento() {
+        return movimiento;
     }
 
     public String getDireccionales() {
@@ -59,5 +57,28 @@ public class Coche {
 
     public void setDireccionales(Direccionales direccionales){
         this.direccionales = direccionales;
+    }
+
+    //Otros métodos
+    public String acelerar(double metros_seg, double segundos){
+        if(this.prende && metros_seg > 0 && segundos > 0){
+            this.movimiento = true;
+            this.velocidad = metros_seg;
+            this.kilometraje += metros_seg * segundos;// v=d/t d = vt acumulador  
+            return "";
+        } else
+            return "No puede acelerar, el vehículo está apagado o algún argumento es cero";
+    }
+
+    //toString
+    @Override
+    public String toString(){
+        return "El coche está " + (this.prende ? "encendido" : "apagado") +
+            "\nEl coche está " + (this.movimiento ? "en movimiento" : "detenido") +
+            "\nEl kilometraje es " + this.kilometraje + " m" +
+            "\nLa velocidad es " + this.velocidad + " m/s" +
+            "\nLa luz delantera está " + (this.luz_delantera ? "encendida" : "apagada") +
+            "\nLa luz trasera está " + (this.luz_trasera ? "encendida" : "apagada") +
+            "\nLas direccionales están " + this.getDireccionales();
     }
 }
