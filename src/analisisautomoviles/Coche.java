@@ -11,13 +11,12 @@ package analisisautomoviles;
  */
 public class Coche {
     //Atributos
-    public boolean prende, luz_delantera, luz_trasera;
+    private boolean prende, luz_delantera, luz_trasera;
     private boolean movimiento;
-    public double kilometraje;
+    private double kilometraje;
     private Direccionales direccionales;
-    public double velocidad;
-    public long time_milis;
-    
+    private double velocidad;
+
     //Constructor
     /**
      */
@@ -32,14 +31,34 @@ public class Coche {
     }
     
     //Getters y Setters
+    public double getKilometraje() {
+        return kilometraje;
+    }
+
+    public double getVelocidad() {
+        return velocidad;
+    }
+/*
+    public void setKilometraje(double kilometraje) {
+        this.kilometraje = kilometraje;
+    }
+*/
+    public void setVelocidad(double velocidad) {
+        this.velocidad = velocidad;
+    }
+    
+    public boolean isMovimiento() {
+        return movimiento;
+    }
+    
+    public String estadoMovimiento(){
+        return this.movimiento ? "en movimiento" : "detenido";
+    }
+
     public void setMovimiento(boolean movimiento) {
         this.movimiento = movimiento;
         if(!this.prende) //this.prende != true
             this.movimiento = false;
-    }
-
-    public boolean isMovimiento() {
-        return movimiento;
     }
 
     public String getDireccionales() {
@@ -59,12 +78,120 @@ public class Coche {
         this.direccionales = direccionales;
     }
 
+    public boolean isCochePrendido() {
+        return prende;
+    }
+
+    public String estadoCoche(){
+        return (this.prende ? "encendido" : "apagado");
+    }
+    
+    public boolean isLuzDelanteraEncendida() {
+        return luz_delantera;
+    }
+
+    public String estadoLuzDelantera(){
+        return (this.luz_delantera ? "encendida" : "apagada");
+    }
+    
+    public boolean isLuzTraseraEncendida() {
+        return luz_trasera;
+    }
+
+    public String estadoLuzTrasera(){
+        return (this.luz_trasera ? "encendida" : "apagada");
+    }
+    
+/*    
+    public void setPrendeCoche(boolean prende) {
+        this.prende = prende;
+    }
+    */
+    public void enciendeCoche() {
+        this.prende = true;
+    }
+
+    public void apagaCoche() {
+        this.prende = false;
+    }
+
+    public void cambiaEstadoCoche() {
+        this.prende = !this.prende;
+    }
+
+/*
+    /**
+     * Solo Dios y yo sabíamos para qué servía esta cosa, ahora, solo Dios lo sabe
+     * @param delantera true para delantera, false para trasera
+     * @param luz true para encendida, false para apagada
+     *//*
+    public void setLuz(boolean delantera, boolean luz) {
+        if(delantera)
+            this.luz_delantera = luz;
+        else
+            this.luz_trasera = luz;
+    }
+
+    public void setLuz_delantera(boolean luz_delantera) {
+        this.luz_delantera = luz_delantera;
+    }
+*/
+    //probar implementación con switch ... case
+    public void enciendeLuzDelantera() {
+        this.luz_delantera = true;
+    }
+
+    public void apagaLuzDelantera() {
+        this.luz_delantera = false;
+    }
+
+    public void cambiaEstadoLuzDelantera() {
+        this.luz_delantera = !this.luz_delantera;
+    }
+
+/*
+    public void setLuz_trasera(boolean luz_trasera) {
+        this.luz_trasera = luz_trasera;
+    }
+*/  
+    public void enciendeLuzTrasera() {
+        this.luz_trasera = true;
+    }
+
+    public void apagaLuzTrasera() {
+        this.luz_trasera = false;
+    }
+
+    public void cambiaEstadoLuzTrasera() {
+        this.luz_trasera = !this.luz_trasera;
+    }
+
     //Otros métodos
+    public String acelerar(){
+        if(this.prende){
+            this.movimiento = true;
+            this.velocidad = 5;
+            this.kilometraje += this.velocidad; //Aceleración instantánea de 1 segundo
+            return "";
+        } else
+            return "No puede acelerar, el vehículo está apagado o algún argumento es cero";
+    }
+
+    public String acelerar(double segundos){
+        if(this.prende && segundos > 0){
+            this.movimiento = true;
+            this.velocidad = 5;
+            this.kilometraje += this.velocidad * segundos;// v=d/t d = vt acumulador  
+            return "";
+        } else
+            return "No puede acelerar, el vehículo está apagado o algún argumento es cero";
+    }
+
     public String acelerar(double metros_seg, double segundos){
         if(this.prende && metros_seg > 0 && segundos > 0){
             this.movimiento = true;
             this.velocidad = metros_seg;
-            this.kilometraje += metros_seg * segundos;// v=d/t d = vt acumulador  
+            this.kilometraje += this.velocidad * segundos;// v=d/t d = vt acumulador  
             return "";
         } else
             return "No puede acelerar, el vehículo está apagado o algún argumento es cero";
@@ -73,12 +200,12 @@ public class Coche {
     //toString
     @Override
     public String toString(){
-        return "El coche está " + (this.prende ? "encendido" : "apagado") +
-            "\nEl coche está " + (this.movimiento ? "en movimiento" : "detenido") +
+        return "El coche está " + this.estadoCoche() +
+            "\nEl coche está " + this.estadoMovimiento() +
             "\nEl kilometraje es " + this.kilometraje + " m" +
             "\nLa velocidad es " + this.velocidad + " m/s" +
-            "\nLa luz delantera está " + (this.luz_delantera ? "encendida" : "apagada") +
-            "\nLa luz trasera está " + (this.luz_trasera ? "encendida" : "apagada") +
+            "\nLa luz delantera está " + this.estadoLuzDelantera() +
+            "\nLa luz trasera está " + this.estadoLuzTrasera() +
             "\nLas direccionales están " + this.getDireccionales();
     }
 }
